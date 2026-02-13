@@ -1,10 +1,12 @@
 "use client"
+import type { User } from "@supabase/supabase-js"
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import BookmarkForm from "@/components/BookmarkForm"
 import BookmarkList from "@/components/BookmarkList"
 
 export default function Dashboard() {
+    const [user, setUser] = useState<User | null>(null)
   const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {

@@ -1,9 +1,22 @@
 "use client"
 import { useEffect, useState } from "react"
+import type { User } from "@supabase/supabase-js"
 import { supabase } from "@/lib/supabase"
 
-export default function BookmarkList({ user }) {
-  const [data, setData] = useState([])
+type Bookmark = {
+  id: string
+  title: string
+  url: string
+  user_id: string
+  created_at: string
+}
+
+type Props = {
+  user: User
+}
+
+export default function BookmarkList({ user }: Props) {
+  const [data, setData] = useState<Bookmark[]>([])
 
   const load = async () => {
     const { data } = await supabase
@@ -12,7 +25,7 @@ export default function BookmarkList({ user }) {
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
 
-    setData(data || [])
+    setData((data as Bookmark[]) || [])
   }
 
   useEffect(() => {
@@ -28,7 +41,7 @@ export default function BookmarkList({ user }) {
           table: "bookmarks",
           filter: `user_id=eq.${user.id}`
         },
-        load
+        () => load()
       )
       .subscribe()
 
@@ -37,7 +50,7 @@ export default function BookmarkList({ user }) {
     }
   }, [user.id])
 
-  const remove = async (id) => {
+  const remove = async (id: string) => {
     await supabase.from("bookmarks").delete().eq("id", id)
     load()
   }
@@ -52,7 +65,6 @@ export default function BookmarkList({ user }) {
 
   return (
     <div className="space-y-3">
-
       {data.map((b) => (
         <div
           key={b.id}
@@ -74,7 +86,6 @@ export default function BookmarkList({ user }) {
           </button>
         </div>
       ))}
-
     </div>
   )
 }

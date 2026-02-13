@@ -1,8 +1,12 @@
 "use client"
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
-
-export default function BookmarkForm({ user, onAdded }) {
+import type { User } from "@supabase/supabase-js"
+type Props = {
+  user: User
+  onAdded: () => void
+}
+export default function BookmarkForm({ user, onAdded }: Props) {
   const [title, setTitle] = useState("")
   const [url, setUrl] = useState("")
 
