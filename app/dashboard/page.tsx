@@ -23,7 +23,7 @@ export default function Dashboard() {
   if (!user) return <div className="p-10">Loading...</div>
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700 p-6">
+    <main className="min-h-screen bg-linear-to-br from-pink-600 via-purple-600 to-indigo-700 p-6">
 
       <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 text-white">
 
